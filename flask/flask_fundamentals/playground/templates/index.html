@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Playground Assignment</title>
+  <style>
+    .container{
+      max-width: 700px;
+      margin: auto;
+    }
+    h2{
+      text-align: center;
+    }
+    .playground{
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .box{
+      display: inline-block;
+      background-color: #9FC5F8;
+      background-color: {{color}};
+      height: 100px;
+      width: 100px;
+      border: 2px solid black;
+      margin: 5px;
+    }
+
+  </style>
+
+</head>
+<body>
+  <div class="container">
+    <h2>Welcome!</h2>
+    <div class="playground">
+      {% for box in range(0, repeat): %}
+    <div class="box" style="color:color"></div>
+      {% endfor %}
+    </div>
+  </div>
+
+
+</body>
+</html>

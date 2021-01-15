@@ -1,0 +1,30 @@
+*{
+  padding: 0;
+  margin: 0 auto;
+}
+
+.text-center{
+  text-align: center;
+}
+
+.box{
+  width: 500px;
+  height: 100px;
+  box-shadow: gray;
+}
+
+.d-inline-block{
+  display: inline-block;
+  vertical-align: top;
+}
+
+.info{
+  width: 200px;
+  height: auto;
+  margin-top: 15px;
+}
+
+img{
+  width: 100px;
+  height: auto;
+}

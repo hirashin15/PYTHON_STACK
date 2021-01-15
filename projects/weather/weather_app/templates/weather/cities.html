@@ -1,0 +1,13 @@
+{% for city_weather in weather_data %}
+<div class="box">
+  <img class="d-inline-block" src="http://openweathermap.org/img/w/{{city_weather.icon}}.png" alt="image">
+  <div class="info d-inline-block">
+    <h2>{{city_weather.city}}</h2>
+    <h4>{{city_weather.temp}}</h4>
+    <h4>{{city_weather.desc}}</h4>
+  </div>
+  <div class="delete d-inline-block">
+    <a href="/delete/{{city_weather.id}}">Delete</a>
+  </div>
+</div>
+{% endfor %}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+</head>
+<body>
+    <h1>Welcome, {{the_person.first_name}}</h1>
+    <hr>
+    
+    {% if messages %}
+    <ul></ul>
+        {% for message in messages %}
+        <li style="color: red;">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    
+    <h1>Add a Favorite Book</h1>
+    <form action="/add_book" method="post">
+      {% csrf_token %}
+      <table>
+        <tr>
+          <td>Title</td>
+          <td><input type="text" name="title"></td>
+        </tr>
+        <tr>
+          <td>Description</td>
+          <td><textarea name="desc"></textarea></td>
+        </tr>
+      </table>
+      <input type="submit" value="Add">
+    </form>
+
+    <h1>All Books</h1>
+    {% for book in books %}
+    <a href="/books/{{book.id}}"><p>{{book.title}}</p></a>
+    <p>(added by {{book.upload.first_name}} {{book.upload.last_name}})</p>
+    {% if book in the_person.userfavs%}
+    <!-- if book is one that user likes -->
+    <p style="font-style: italic;">this is one of your favorites</p>
+    {% else %}
+    <a href="/favorite/{{book.id}}">Add to Favorites</a>
+    {% endif %}
+    {% endfor %}
+    <a href="/logout">Logout</a>
+</body>
+</html>

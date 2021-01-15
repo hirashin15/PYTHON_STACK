@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Main Page</title>
+</head>
+<body>
+
+  {% if messages %}
+  <ul>
+      {% for message in messages %}
+      <li style="color: red;">{{ message }}</li>
+      {% endfor %}
+  </ul>
+  {% endif %}
+
+  <h1>Welcome, {{user_logged.name}}!</h1>
+  <a href='/books/add'>Add Book and Review</a>
+  <a href='/logout'>Logout</a>
+
+  <h3>Recent Book Reviews:</h3>
+  {% for review in first_3_reviews %}
+  <ul>
+    <li><a href="/book_info/{{review.review_for.id}}"><h2>{{review.review_for.title}}</h2></a></li>
+      <ul>
+        <li>Rating: 
+          {% for i in review.rating|times %}
+          <img src="star.jpg" alt="reviews" width="40" height="40">
+          {% endfor %}
+        </li>
+        <li><a href="/user/{{review.review_by.id}}">{{review.review_by.name}}</a> says: {{review.text}}</li>
+        <li style="font-style: italic;">Posted on {{review.created_at}}</li>
+      </ul>
+  </ul>
+  {% endfor %}
+
+  <h3>Other Books with Reviews</h3>
+  <div style="width: 300px; height: 200px; overflow: auto;" class="scroll">
+    {% for review in rest_of_reviews %}
+    <p><a href="/book_info/{{review.review_for.id}}">{{review.review_for.title}}</a></p>
+    {% endfor %}
+  </div>
+
+
+</body>
+</html>

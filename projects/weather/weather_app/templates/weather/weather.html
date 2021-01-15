@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"
+  ></script>
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"
+  ></script>
+
+  <script>
+    $(document).ready(function(){
+      $('#form_id').on('submit', function(e){
+        e.preventDefault();
+        var token = "{{csrf_token}}";
+
+        $.ajax({
+          type: "POST",
+          headers: {"X-CSRFToken": token},
+          url: "{% url 'ajax_posting' %}",
+          data: {
+            name : $('#id_name').val(),
+            dataType: 'json'
+          },
+          success: function(data){
+            $('.all_weather').html(data)
+          }
+        })
+      })
+    })
+
+  </script>
+</head>
+<body>
+  <h1 class="text-center">This is the weather app!</h1><br>
+
+  <div class="all_weather">
+
+    {% for city_weather in weather_data %}
+    <div class="box">
+      <img class="d-inline-block" src="http://openweathermap.org/img/w/{{city_weather.icon}}.png" alt="image">
+      <div class="info d-inline-block">
+        <h2>{{city_weather.city}}</h2>
+        <h4>{{city_weather.temp}}</h4>
+        <h4>{{city_weather.desc}}</h4>
+      </div>
+      <div class="delete d-inline-block">
+        <a href="/delete/{{city_weather.id}}">Delete</a>
+      </div>
+    </div>
+    {% endfor %}
+
+  </div>
+
+  <form id="form_id" class="text-center" method="post">
+    {% csrf_token %}
+    {{ form.name }}
+    <button type="submit">Add City</button>
+  </form>
+
+  <div id="error"></div>
+
+
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Single Model ORM</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <h1 class="text-center">All the Users</h1>
+  <div class="page-center">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Age</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in all_users %}
+        <tr>
+          <td>{{user.id}}</td>
+          <td>{{user.first_name}} {{user.last_name}}</td>
+          <td>{{user.email_address}}</td>
+          <td>{{user.age}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="text-center">
+    <h1>Add a User</h1>
+    <form action="/process" method="post">
+      {%csrf_token%}
+      <div class="page-center">
+        <label for="first">First Name</label>
+        <input type="text" name="first" id="first">
+        <label for="last">last Name</label>
+        <input type="text" name="last" id="last">
+      </div>
+      <div class="page-center">
+        <label for="email">Email</label>
+        <input type="text" name="email" id="email">
+        <label for="age">Age</label>
+        <input type="text" name="age" id="age">
+      </div>
+      <button>Add</button>
+    </form>
+  </div>
+</body>
+</html>

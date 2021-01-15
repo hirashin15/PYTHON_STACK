@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="/shows">Go back</a>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{message.tags}}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <h1>Edit Show {{tvshow.id}}</h1>
+
+    <form action="/shows/{{tvshow.id}}/update" method="post">
+    {% csrf_token %}
+    <h2>Title</h2>
+    <input type="text" name="title" placeholder="{{tvshow.title}}">
+
+    <select name="network">
+        {% for i in tvshow_list %}
+        <option value={{i.id}}>{{tvshow.networks.first.name}}</option>
+        {% endfor %}
+    </select>
+
+    <h2>Release Date</h2>
+    <input type="date" name="date">
+
+    <h2>Description</h2>
+    <textarea row='4' col='150' name="desc"></textarea>
+    
+    <input type="submit" value="Update">
+    </form>
+
+
+    <a href="/shows/{{tvshow.id}}">Go to Show</a>
+
+
+</body>
+</html>

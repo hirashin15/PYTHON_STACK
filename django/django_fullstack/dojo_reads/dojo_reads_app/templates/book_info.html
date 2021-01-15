@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Specific Book Info Page</title>
+</head>
+<body>
+  <a href="/books">Home</a>
+  <a href="/logout">Logout</a>
+
+  <h1>{{this_book.title}}</h1>
+  <h2>Author: {{this_book.authors.first.name}}</h2>
+
+  <h1>Reviews:</h1>
+  <hr>
+  {% for review in this_book.reviews_for_book.all %}
+  <ul>
+    <li>Rating:        
+      {% for i in review.rating|times %}
+      <img src="star.jpg" alt="reviews" width="40" height="40">
+      {% endfor %}
+    </li>
+    <li><a href="/user/{{review.review_by.id}}">{{review.review_by.name}}</a> says: {{review.text}} </li>
+    <li style="font-style: italic;">Post on {{review.created_at}}</li>
+    {% if review.review_by.id == this_user.id %}
+    <li><a href="/delete/{{review.id}}/{{review.review_for.id}}">Delete this Review</a></li>
+    {% endif %}
+  </ul>
+  {% endfor %}
+
+  <h3>Add a Review:</h3>
+  <form action="/book_info/add_review/{{this_book.id}}" method="post">
+    {% csrf_token %}
+    <textarea name="review" rows="4" cols="50"></textarea>
+    <h3>Rating: <input type="number" name="rating" min="1" max="5" placeholder="5"> stars.</h3>
+    <button>Submit Review</button>
+  </form>
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+.d-flex{
+  display: flex;
+  justify-content: space-between;
+}
+
+.d-inline-block{
+  display: inline-block;
+  vertical-align: top;
+}
+
+.box{
+  width: 200px;
+  height: 200px;
+  border: 2px solid black;
+}
+
+.box2{
+  height: 300px;
+  border: 2px solid black;
+}
+
+.page-center{
+  display: flex;
+  justify-content: center;
+}
+
+.text-center{
+  text-align: center;
+}
+
+.h{
+  height: 100px;
+  width: auto;
+}
+
+.red{
+  color: red;
+}
+.green{
+  color: green;
+}
+
+.container{
+  padding: 30px;
+}

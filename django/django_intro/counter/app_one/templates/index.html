@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Counter Assignment</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <div class="container">
+    <div class="page-center">
+      <div class="main">
+        <h2 class='text-center'>Counter</h2>
+        <p class='text-center'>{{request.session.count}} times</p>
+      </div>
+      <div class="main">
+        <h2 class='text-center'>Total Visits</h2>
+        <p class='text-center'>{{request.session.total}} times</p>
+      </div>
+    </div>
+
+
+    <div class="page-center">
+      <form action="/destroy_session" class='m-1'>
+        {%csrf_token%}
+        <button type='submit'>Reset</button>
+      </form>
+      <form action="/+2" class='m-1'>
+        {%csrf_token%}
+        <button type='submit'>+ 2</button>
+      </form>
+    </div>
+    <div class="page-center">
+      <form action="/custom" method='post'>
+        {%csrf_token%}
+        <p>Increment by: <input type='number' name='increment'><button type='submit'>Submit</button></p>
+
+      </form>
+    </div>
+  </div>
+
+</body>
+</html>

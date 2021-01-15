@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Wall</title>
+</head>
+
+<body>
+    <h1>Coding Dojo Wall</h1>
+    <h3>Welcome </h3>
+    <a href="logout">Log Out</a>
+
+    <h3>Post A Message</h3>
+    <form action="/post_message" method="POST">
+        {% csrf_token %}
+        <input type='hidden' name="user_id" value={{user.id}}>
+        <textarea name="post_message" cols="30" rows="10"></textarea>
+        <input type="submit" value="Post Message">
+    </form>
+
+
+    {% for msg in message %}
+    <h2>{{msg.message_by.fname}} {{msg.message_by.lname}} - {{msg.created_at}}</h2>
+    <h2> {{msg.message}} </h2>
+
+    {% for cmt in msg.comments.all %}
+    <ul>
+        <li><h3>From: {{cmt.comment_by.fname}} {{cmt.comment_by.lname}}</h3></li>
+        <ul>
+            <li><h3>{{cmt.comment}}</h3></li>
+        </ul>
+    </ul>
+    {% endfor %}
+
+    <form action="/post_comment" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="msg_id" value={{msg.id}}>
+        <textarea name="post_comment" cols="30" rows="10"></textarea>
+        <input type="submit" value="Post Comment">
+
+    </form>
+
+    {% endfor %}
+
+</body>
+
+</html>

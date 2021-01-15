@@ -1,0 +1,79 @@
+{% load crispy_forms_filters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacts - Practice Ajax and API</title>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.js"
+      integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+
+      $(document).ready(function(){
+
+        const form = document.getElementById('form');
+        form.addEventListener('submit', submitHandler);
+
+        function submitHandler(e){
+          e.preventDefault()
+          $.ajax({
+            type: 'POST',
+            url: '{% url "contacts" %}',
+            data: $('#form').serialize(),
+            dataType: 'json',
+            success: function(serverResponse){
+              console.log("I entered success>>>>>>>>>>")
+              form.reset()
+              alert(serverResponse)
+              // if(data.msg === 'Success'){
+              //   form.reset();
+              //   alert("Form was submitted")
+              //   console.log("I entered data.msg>>>>>>>>>>>>>>>>>>>>>>")
+              // } else {
+              //   alert('Error occurred')
+              // }
+            }
+          })
+        }
+      })
+
+    </script>
+
+
+</head>
+<body>
+
+  <div class="container">
+    <h1>Post it notes</h1>
+    {% for post in contacts %}
+    <div>
+      <h3>{{post.name}}</h3>
+    </div>
+    {% endfor %}
+
+    <h1>Contacts Form</h1>
+    <form method="post" id='form'>
+      {% csrf_token %}
+      {{ contacts_form|crispy }}
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+  
+</body>
+</html>

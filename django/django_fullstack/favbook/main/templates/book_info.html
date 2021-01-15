@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Info</title>
+</head>
+
+<body>
+    <h1>Welcome, {{the_person.first_name}}</h1>
+    <hr>
+    
+    {% if messages %}
+    <ul></ul>
+        {% for message in messages %}
+        <li style="color: red;">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    
+    <form action="/update/{{book.id}}" method="post">
+        {% csrf_token %}
+        {% if book.upload.id == the_person.id %}
+        <input type="text" name="title" placeholder="{{book.title}}">
+        {% else %}
+        <h1>{{book.title}}</h1>
+        {% endif %}
+
+        <p>Added by: {{book.upload.first_name}} {{book.upload.last_name}}</p>
+        <p>Added on: {{book.created_at}}</p>
+        <p>Last updated on: {{book.updated_at}}</p>
+        <p>Description:
+            {% if book.upload.id == the_person.id %}
+            <textarea name="desc">{{book.desc}}</textarea></p>
+        <input type="submit" value="Update">
+        <a href="/delete/{{book.id}}" style="border: 1px solid black; background-color: red; color: white;">Delete</a>
+        {% else %}
+        {{book.desc}}
+        {% endif %}
+    </form>
+
+
+    <h1>User Who Like This Book:</h1>
+    <ul>
+        {% for i in book.users_who_like.all %}
+        <li>{{i.first_name}} {{i.last_name}}</li>
+        {% if the_person.id == i.id %}
+        <a href="/unfavorite/{{book.id}}">Un-Favorite</a>
+        {% endif %}
+        {% endfor %}
+    </ul>
+
+    {% if book not in the_person.userfavs %}
+    <a href="/favorite/{{book.id}}">Add to Favorites</a>
+    {% endif %}
+
+    <a href="/logout">Logout</a>
+
+</body>
+
+</html>

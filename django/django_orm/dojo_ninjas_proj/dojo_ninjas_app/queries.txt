@@ -1,0 +1,43 @@
+run shell and import models:
+python manage.py shell
+from dojo_ninjas_app.models import Dojo, Ninja
+
+Create 3 new dojos:
+Dojo.objects.create(name="dojo", city="seattle", state="WA")
+Dojo.objects.create(name="dojo", city="bay-area", state="CA")
+Dojo.objects.create(name="dojo", city="houston", state="TX")
+
+Delete the 3 dojos just created:
+Dojo.objects.all().delete()
+
+Create 3 more dojos:
+Dojo.objects.create(name="dojo", city="san fram", state="NJ")
+Dojo.objects.create(name="dojo", city="pickle", state="NY")
+Dojo.objects.create(name="dojo", city="juice", state="FL")
+
+Create 3 ninjas that belong to the first dojo:
+Ninja.objects.create(first_name="Juni", last_name="Cortez", dojo_id=Dojo.objects.first())
+Ninja.objects.create(first_name="Alexa", last_name="Vega", dojo_id=Dojo.objects.first())
+Ninja.objects.create(first_name="Pika", last_name="Chu", dojo_id=Dojo.objects.first())
+
+Create 3 ninjas that belong to the second dojo:
+Ninja.objects.create(first_name="rappy", last_name="kid", dojo_id=Dojo.objects.get(id=5))
+Ninja.objects.create(first_name="pumpkin", last_name="eater", dojo_id=Dojo.objects.get(id=5))
+Ninja.objects.create(first_name="cheater", last_name="peterson", dojo_id=Dojo.objects.get(id=5))
+
+Create 3 ninjas that belong to the third dojo:
+Ninja.objects.create(first_name="July", last_name="johnson", dojo_id=Dojo.objects.last())
+Ninja.objects.create(first_name="april", last_name="tower", dojo_id=Dojo.objects.last())
+Ninja.objects.create(first_name="may", last_name="flower", dojo_id=Dojo.objects.last())
+
+Retrieve all ninjas from first dojo:
+Ninja.objects.filter(dojo_id=Dojo.objects.get(id=7))
+
+Retrieve all ninjas from last dojo:
+Ninja.objects.filter(dojo_id=Dojo.objects.get(id=9))
+
+Retrieve the last ninja's dojo:
+Ninja.objects.last().dojo_id
+
+Create a new dojo:
+Dojo.objects.create(name="dojo", city="africa", state="AZ", desc="1")

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ninja Gold</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="{% static 'js/js.js' %}"></script>
+</head>
+<body>
+  <div class="container">
+    <!-- Part 1 ************************************** -->
+    <div class="top">
+      <p class='d-inline-block'>Your Gold: </p>
+      <div class='d-inline-block'>{{request.session.total_gold}}</div>
+    </div>
+
+    <!-- Part 2 ****************************************** -->
+    <div class="boxes d-flex">
+      <div class="box text-center">
+        <h3>Farm</h3>
+        <p>(earns 10-20 golds)</p>
+        <form action="/process_money" method='post'>
+          {% csrf_token %}
+          <input type='hidden' name='which_form' value='farm'>
+          <button>Find Gold!</button>
+        </form>
+      </div>
+
+      <div class="box text-center">
+        <h3>Cave</h3>
+        <p>(earns 5-10 golds)</p>
+        <form action="/process_money" method='post'>
+          {% csrf_token %}
+          <input type='hidden' name='which_form' value='cave'>
+          <button>Find Gold!</button>
+        </form>
+      </div>
+
+      <div class="box text-center">
+        <h3>House</h3>
+        <p>(earns 2-5 golds)</p>
+        <form action="/process_money" method='post'>
+          {% csrf_token %}
+          <input type='hidden' name='which_form' value='house'>
+          <button>Find Gold!</button>
+        </form>
+      </div>
+
+      <div class="box text-center">
+        <h3>Casino</h3>
+        <p>(earn/takes 0-50 golds)</p>
+        <form action="/process_money" method='post'>
+          {% csrf_token %}
+          <input type='hidden' name='which_form' value='casino'>
+          <button>Find Gold!</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Part 3 **************************************** -->
+    <div class="activity">
+      <p>Activities:</p>   
+      <div class="box2">
+        {{request.session.content|safe}}
+      </div>     
+    </div>
+
+  </div>
+</body>
+</html>

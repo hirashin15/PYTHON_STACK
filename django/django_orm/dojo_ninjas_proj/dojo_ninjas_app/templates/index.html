@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dojo Ninjas With Template</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <div class="container">
+    <!-- top ************************************************************************ -->
+    <div class="top">
+      <div class="section">
+        <h1>Add a Dojo</h1>
+        <form action="/process" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="form_type" value="dojo">
+          <table>
+            <tr>
+              <td>Name</td>
+              <td><input type=text name="name"></td>
+            </tr>
+            <tr>
+              <td>City</td>
+              <td><input type=text name="city"></td>
+            </tr>
+            <tr>
+              <td>State</td>
+              <td><input type=text name="state"></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td><button>Add</button></td>
+            </tr>
+          </table>
+        </form>
+      </div>
+
+      <div class="section">
+        <h1>Add a Ninja</h1>
+        <form action="/process" method="post">
+          {% csrf_token %}          
+          <input type="hidden" name="form_type" value="ninja">
+          <table>
+            <tr>
+              <td>First Name</td>
+              <td><input type=text name="fname"></td>
+            </tr>
+            <tr>
+              <td>Last Name</td>
+              <td><input type=text name="lname"></td>
+            </tr>
+            <tr>
+              <td>Dojo</td>
+              <td>
+                <select name="dojo">
+                  {% for dojo in dojo_ninja_list %}
+                  <option>{{dojo.city}}</option>
+                  {% endfor %}
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td><button>Add</button></td>
+            </tr>
+          </table>
+        </form>
+      </div>
+
+    </div>
+
+    <hr>
+     <!-- bottom *********************************************************************** -->
+    <div class="bottom">
+      <h1 class="text-center">All the Dojos</h1>
+      <div class="page-center">
+        <ul class="ul-style-out"> 
+          {% for dojo in dojo_ninja_list %}
+          <li>
+            <b>Ninjas at the {{dojo.city}} Dojo</b>
+            <form action="/delete" method="post">
+              {%csrf_token%}
+              <input type="hidden" name="delete", value="{{dojo.city}}">
+              <button>Delete from DB</button>
+            </form>
+          </li>
+            <ul class="ul-style-in">
+              {% for ninja in dojo.ninjas.all %}
+              <li>{{ninja.first_name}} {{ninja.last_name}}</li>
+              {% endfor %}
+            </ul>
+          {% endfor %}
+        </ul>
+      </div>
+
+    </div>
+
+
+  </div>
+</body>
+</html>

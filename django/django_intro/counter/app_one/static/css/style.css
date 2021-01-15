@@ -1,0 +1,17 @@
+.container{
+}
+.main{
+  display: inline-block;
+  vertical-align: top;
+  margin: 20px;
+}
+.text-center{
+  text-align: center;
+}
+.page-center{
+  display: flex;
+  justify-content: center;
+}
+.m-1{
+  margin: 10px;
+}
